@@ -6,3 +6,7 @@ services:
       - "80:80"
   redis:
     image: "redis:alpine"
+    volumes:
+      - redis_data:/data
+volumes:
+  redis_data:
