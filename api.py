@@ -40,7 +40,7 @@ class GameHandler(tornado.web.RequestHandler):
             player1 = data['player1']
             player2 = data['player2']
             move = 0
-            board = [None for i in range(8)]
+            board = [None for i in range(9)]
             status = Game.in_progress
             # retrieve next id from redis
             new_game = Game(game_dao.get_next_id(), player1, player2, board, status, move)
