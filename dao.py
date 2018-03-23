@@ -39,7 +39,7 @@ class GameDao:
 
     def get_all(self):
         game_list = []
-        keys = [i + 1 for i in range(int(self.redis.get('user:id')))]
+        keys = [i + 1 for i in range(int(self.redis.get('user:id') or 0))]
         for sg in keys:
             game_list.append(self.get_saved_game(sg).to_json())
         return game_list
