@@ -2,27 +2,44 @@
 class Game:
     in_progress = 'In Progress'
     draw = 'Draw'
-    win = ' Wins'
+    win = ' You Win!'
+    player1_marker = 1
+    player2_marker = 0
 
-    def __init__(self,id, player1, player2, board, status, move):
+    def __init__(self,id, player1, player2, board, status, move, next_turn):
         self.id = id
         self.player1 = player1
         self.player2 = player2
         self.board = board
         self.status = status
         self.move = move
+        self.next_turn = next_turn
 
-    def update_game(self, board):
-        self.board = board
+    def update_game(self):
         self.move += 1
-        if(Game.check_status(self.board, 1)):
-            self.status = self.player1 + Game.win
-        elif(Game.check_status(self.board, 0)):
-            self.status = self.player1 + Game.win
-        elif(None in self.board):
+        if(Game.check_status(self.board, self.next_turn)):
+            self.status = Game.win
+        elif(not None in self.board):
             self.status = Game.draw
         else:
-            self.status = Game.in_progress
+            if self.next_turn == Game.player1_marker:
+                self.next_turn = Game.player2_marker
+            else:
+                self.next_turn = Game.player1_marker
+
+    def make_move(self, xo, location):
+        if xo != 0 and xo != 1:
+            return False
+        if not 0 <= location <=8:
+            return False
+        if self.board[location] is not None:
+            return False
+        if xo != self.next_turn:
+            return False
+
+        self.board[location] = xo
+        return True
+
 
     def to_json(self):
         return {
@@ -31,7 +48,14 @@ class Game:
             'player2': self.player2,
             'board': self.board,
             'move': self.move,
-            'status': self.status
+            'status': self.status,
+            'nextTurn': self.next_turn
+        }
+
+    @staticmethod
+    def invalid_move():
+        return {
+            'error': 'invalid move'
         }
 
     @staticmethod
@@ -46,13 +70,15 @@ class Game:
             return True
         if board[1] == xo and board[4] == xo and board[7] == xo:
             return True
+        if board[0] == xo and board[3] == xo and board[6] == xo:
+            return True
         if board[0] == xo and board[4] == xo and board[8] == xo:
             return True
         if board[2] == xo and board[4] == xo and board[6] == xo:
             return True
         return False
 
-    @staticmethod    
+    @staticmethod
     def validate_board(board):
         if len(board) != 9:
             return False

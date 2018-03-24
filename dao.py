@@ -17,13 +17,14 @@ class GameDao:
             self.redis.rpush(key, i)
 
     def get_saved_game(self, id):
-        saved_game = self.redis.hmget(id, 'player1', 'player2', 'move', 'status')
+        saved_game = self.redis.hmget(id, 'player1', 'player2', 'move', 'status', 'nextTurn')
         if not saved_game[0]:
             return None
         player1 = saved_game[0].decode('utf-8')
         player2 = saved_game[1].decode('utf-8')
         move = int(saved_game[2].decode('utf-8'))
         status = saved_game[3].decode('utf-8')
+        next_turn = int(saved_game[4].decode('utf-8'))
 
         key = str(id) + ':' + str(move)
         board = []
@@ -33,7 +34,7 @@ class GameDao:
             else:
                 board.append(int(i))
 
-        game = Game(id, player1, player2, board, status, move)
+        game = Game(id, player1, player2, board, status, move, next_turn)
 
         return game
 

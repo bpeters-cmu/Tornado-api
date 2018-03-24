@@ -41,23 +41,25 @@ class GameHandler(tornado.web.RequestHandler):
             data = json_decode(self.request.body)
             game_dao = GameDao(self.redis)
             if game_id:
-                board = data['board']
-                if not Game.validate_board(board):
-                    self.set_status(400)
-                    return
+                player = data['player']
+                location = data['location']
                 game = game_dao.get_saved_game(game_id)
-                game.update_game(board)
+                if not game.make_move(player, location):
+                    self.set_status(400)
+                    self.write(Game.invalid_move())
+                    return
+                game.update_game()
                 game_dao.save(game)
                 self.set_status(204)
             else:
-                # create new game
-                player1 = data['player1']
-                player2 = data['player2']
+                # create new game, assign x to player1, o to player2
+                player1 = data['player1'] + '-x'
+                player2 = data['player2'] + '-o'
                 move = 0
                 board = [None for i in range(9)]
                 status = Game.in_progress
                 # create new game, incrementing last ID in redis to ensure unique ID
-                new_game = Game(game_dao.get_next_id(), player1, player2, board, status, move)
+                new_game = Game(game_dao.get_next_id(), player1, player2, board, status, move, Game.player1_marker)
                 game_dao.save(new_game)
                 self.set_status(201)
                 self.write(new_game.to_json())
