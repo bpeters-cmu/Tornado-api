@@ -51,3 +51,12 @@ class Game:
         if board[2] == xo and board[4] == xo and board[6] == xo:
             return True
         return False
+
+    @staticmethod    
+    def validate_board(board):
+        if len(board) != 9:
+            return False
+        for i in board:
+            if i != None and i != 0 and i != 1:
+                return False
+        return True
