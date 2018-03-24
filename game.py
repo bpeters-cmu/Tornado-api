@@ -2,7 +2,7 @@
 class Game:
     in_progress = 'In Progress'
     draw = 'Draw'
-    win = ' You Win!'
+    win = 'Wins!'
     player1_marker = 1
     player2_marker = 0
 
@@ -18,7 +18,7 @@ class Game:
     def update_game(self):
         self.move += 1
         if(Game.check_status(self.board, self.next_turn)):
-            self.status = Game.win
+            self.status = self.next_turn + ' ' + Game.win
         elif(not None in self.board):
             self.status = Game.draw
         else:
@@ -28,6 +28,8 @@ class Game:
                 self.next_turn = Game.player1_marker
 
     def make_move(self, player, location):
+        if self.status != Game.in_progress:
+            return False, 'Game Over'
         if player != 0 and player != 1:
             return False, 'Player must be 0 or 1'
         if not 0 <= location <=8:
