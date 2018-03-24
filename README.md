@@ -21,6 +21,8 @@ The positional layout of the board is as follows:
 
                                             6 | 7 | 8
 
-Players are automatically assigned X or O and take turns based on the "nextTurn" field returned in the "Get Game By ID" api
+Players are automatically assigned X or O and take turns based on the "nextTurn" field returned in the "Get Game By ID" api. 
+
+Player1 is always assigned 'x' (appended to player name like so "player1-x") similarly Player2 is assigned 'o' "player2-o"
 
 When a player gets 3 in a row, they win and the game is over, also, if the board is full and neither player has 3 in a row, the game ends in a draw
