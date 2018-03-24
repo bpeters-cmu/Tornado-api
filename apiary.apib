@@ -1,5 +1,5 @@
 FORMAT: 1A
-HOST: http://<ip>:80
+HOST: http://52.87.242.146:80
 
 # Tic-Tac-Toe
 
@@ -76,7 +76,7 @@ RESTful API for a simple tic-tac-toe game.
                 "status": "In Progress"
             }  
             
-### Update Board [POST /api/games/<id>]
+### Make move [POST /api/games/<id>]
 
 
 + Request (application/json)
@@ -84,17 +84,8 @@ RESTful API for a simple tic-tac-toe game.
     + Body
     
             { 
-                "board": [
-                    1,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-                    ]
+                "player": 1,
+                "location": 7
                 
             }        
 + Response 204 (application/json)
