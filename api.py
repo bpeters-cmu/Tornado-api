@@ -44,9 +44,10 @@ class GameHandler(tornado.web.RequestHandler):
                 player = data['player']
                 location = data['location']
                 game = game_dao.get_saved_game(game_id)
-                if not game.make_move(player, location):
+                move, msg = game.make_move(player, location)
+                if not move:
                     self.set_status(400)
-                    self.write(Game.invalid_move())
+                    self.write(Game.invalid_move(msg))
                     return
                 game.update_game()
                 game_dao.save(game)

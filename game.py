@@ -27,18 +27,18 @@ class Game:
             else:
                 self.next_turn = Game.player1_marker
 
-    def make_move(self, xo, location):
-        if xo != 0 and xo != 1:
-            return False
+    def make_move(self, player, location):
+        if player != 0 and player != 1:
+            return False, 'Player must be 0 or 1'
         if not 0 <= location <=8:
-            return False
+            return False, 'Location must be between 0 - 8'
         if self.board[location] is not None:
-            return False
-        if xo != self.next_turn:
-            return False
+            return False, 'There is already a marker in that location'
+        if player != self.next_turn:
+            return False, 'It is not your turn!'
 
-        self.board[location] = xo
-        return True
+        self.board[location] = player
+        return True, None
 
 
     def to_json(self):
@@ -53,9 +53,9 @@ class Game:
         }
 
     @staticmethod
-    def invalid_move():
+    def invalid_move(msg):
         return {
-            'error': 'invalid move'
+            'error': 'invalid move - ' + msg
         }
 
     @staticmethod
@@ -77,12 +77,3 @@ class Game:
         if board[2] == xo and board[4] == xo and board[6] == xo:
             return True
         return False
-
-    @staticmethod
-    def validate_board(board):
-        if len(board) != 9:
-            return False
-        for i in board:
-            if i != None and i != 0 and i != 1:
-                return False
-        return True
