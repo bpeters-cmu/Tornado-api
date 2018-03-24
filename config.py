@@ -1,1 +1,1 @@
-redis_host = 'localhost'
+redis_host = 'redis'
