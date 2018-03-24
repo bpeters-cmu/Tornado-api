@@ -8,7 +8,7 @@ or here: https://github.com/bpeters-cmu/Tornado-api/blob/master/apiary.apib
 
 Tornado is configured to listen on port 80
 
-This application is also currently running on AWS and can be accessed at <ip> 
+This application is also currently running on AWS and can be accessed at 52.87.242.146:80/api/games
   
 ## Gameplay
 The tic-tac-toe board is represented by a list data structure, with 1 representing X and 0 representing O
