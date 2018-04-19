@@ -25,4 +25,4 @@ Players are automatically assigned X or O and take turns based on the "nextTurn"
 
 Player1 is always assigned 'x' (appended to player name like so "player1-x") similarly Player2 is assigned 'o' "player2-o"
 
-When a player gets 3 in a row, they win and the game is over, also, if the board is full and neither player has 3 in a row, the game ends in a draw
+When a player gets 3 in a row, they win and the game is over, also, if the board is full and neither player has 3 in a row, the game ends in a draw.
